@@ -1,16 +1,16 @@
 Summary:	Management tools for the TPM hardware
 Summary(pl.UTF-8):	Narzędzia zarządzające sprzętem TPM
 Name:		tpm-tools
-Version:	1.2.5.1
+Version:	1.3.1
 Release:	1
 License:	CPL v1+
 Group:		Applications/System
 Source0:	http://dl.sourceforge.net/trousers/%{name}-%{version}.tar.gz
-# Source0-md5:	621a354f2b054646bbb15cfd4a5270b7
+# Source0-md5:	ee1706b69bb76cc6d011757ea194f683
 URL:		http://trousers.sourceforge.net/
 BuildRequires:	opencryptoki-devel >= 2.2.4
 BuildRequires:	openssl-devel
-BuildRequires:	trousers-devel
+BuildRequires:	trousers-devel >= 1.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -31,7 +31,7 @@ Summary:	Header files for tpm_unseal library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki tpm_unseal
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	trousers-devel
+Requires:	trousers-devel >= 1.2
 
 %description devel
 Header files for tpm_unseal library.
