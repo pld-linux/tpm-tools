@@ -1,16 +1,16 @@
 Summary:	Management tools for the TPM hardware
 Summary(pl.UTF-8):	Narzędzia zarządzające sprzętem TPM
 Name:		tpm-tools
-Version:	1.3.1
+Version:	1.3.5
 Release:	1
-License:	CPL v1+
+License:	CPL v1.0+
 Group:		Applications/System
-Source0:	http://dl.sourceforge.net/trousers/%{name}-%{version}.tar.gz
-# Source0-md5:	ee1706b69bb76cc6d011757ea194f683
+Source0:	http://downloads.sourceforge.net/trousers/%{name}-%{version}.tar.gz
+# Source0-md5:	b64baa248cf30a57ad0e5fb6f096e7dc
 URL:		http://trousers.sourceforge.net/
 BuildRequires:	opencryptoki-devel >= 2.2.4
 BuildRequires:	openssl-devel
-BuildRequires:	trousers-devel >= 1.2
+BuildRequires:	trousers-devel >= 0.3.6
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -31,25 +31,14 @@ Summary:	Header files for tpm_unseal library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki tpm_unseal
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	trousers-devel >= 1.2
+Requires:	trousers-devel >= 0.3.6
+Obsoletes:	tpm-tools-static
 
 %description devel
 Header files for tpm_unseal library.
 
 %description devel -l pl.UTF-8
 Pliki nagłówkowe biblioteki tpm_unseal.
-
-%package static
-Summary:	Static tpm_unseal library
-Summary(pl.UTF-8):	Statyczna biblioteka tpm_unseal
-Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
-
-%description static
-Static tpm_unseal library.
-
-%description static -l pl.UTF-8
-Statyczna biblioteka tpm_unseal.
 
 %package pkcs11
 Summary:	Data management tools that use a PKCS#11 interface to the TPM
@@ -77,6 +66,7 @@ obiektów w kontenerze i chronić dane.
 
 %build
 %configure
+
 %{__make}
 
 %install
@@ -97,6 +87,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/tpm_*
 %attr(755,root,root) %{_sbindir}/tpm_*
 %attr(755,root,root) %{_libdir}/libtpm_unseal.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libtpm_unseal.so.1
 %{_mandir}/man1/tpm_*.1*
 %{_mandir}/man8/tpm_*.8*
 
@@ -106,10 +97,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libtpm_unseal.la
 %{_includedir}/tpm_tools
 %{_mandir}/man3/tpmUnseal*.3*
-
-%files static
-%defattr(644,root,root,755)
-%{_libdir}/libtpm_unseal.a
 
 %files pkcs11
 %defattr(644,root,root,755)
