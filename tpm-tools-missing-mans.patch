@@ -1,0 +1,386 @@
+--- tpm-tools-1.3.6/man/man1.orig/tpmtoken_import.1	1970-01-01 01:00:00.000000000 +0100
++++ tpm-tools-1.3.6/man/man1/tpmtoken_import.1	2011-06-20 20:40:37.725223744 +0200
+@@ -0,0 +1,92 @@
++.\" Copyright (C) 2005 International Business Machines Corporation
++.\"
++.de Sh \" Subsection
++.br
++.if t .Sp
++.ne 5
++.PP
++\fB\\$1\fR
++.PP
++..
++.de Sp \" Vertical space (when we can't use .PP)
++.if t .sp .5v
++.if n .sp
++..
++.de Ip \" List item
++.br
++.ie \\n(.$>=3 .ne \\$3
++.el .ne 3
++.IP "\\$1" \\$2
++..
++.TH "tpmtoken_import" 1 "2005-04-25"  "TPM Management"
++.ce 1
++TPM Management - tpmtoken_import
++.SH NAME
++tpmtoken_import \- import an X.509 certficate and/or an RSA key pair into
++the user's TPM PKCS#11 data store
++.SH "SYNOPSIS"
++.ad l
++.hy 0
++.B tpmtoken_import
++[ OPTION ] FILE
++
++.SH "DESCRIPTION"
++.PP
++\fBtpmtoken_import\fR imports a PEM formatted representation of an
++X.509 certificate and/or an RSA key contained in FILE.
++.PP
++Importing an X.509 certificate creates an X.509 Public Key Certificate
++PKCS#11 object and also an RSA Public Key PKCS#11 object using the RSA public
++key contained in the certificate.  The certificate's key must be an RSA
++key in order for the certificate to be successfully processed by this command.
++.PP
++Importing an RSA key creates an RSA Public Key and an RSA Private Key PKCS#11
++object.  In order to associate the RSA PKCS#11 objects with an
++X.509 Public Key Certificate PKCS#11 object, the RSA PKCS#11 objects must have
++a subject name and key identifier associated with them.  This can be accomplished
++by supplying the corresponding X.509 certificate as an optional command parameter.
++.PP
++The input can contain PEM formatted representations of both an
++X.509 certificate and an RSA key. If both representations are present then
++an X.509 Public Key Certificate PKCS#11 object, an RSA Public Key PKCS#11 object
++and an RSA Private Key PKCS#11 object are created.
++
++.TP
++\fB\-h\fR, \fB\-\-help\fR
++Display command usage info.
++.TP
++\fB-v\fR, \fB\-\-version\fR
++Display command version info.
++.TP
++\fB-l\fR, \fB\-\-log\fR [none|error|info|debug]
++Set logging level.
++.TP
++\fB-i\fR, \fB\-\-idfile\fR FILE
++Use FILE as the PEM formatted X.509 certificate input used
++to obtain the subject and id attributes
++.TP
++\fB-k\fR, \fB\-\-token\fR STRING
++Use STRING to identify the label of the PKCS#11 token to
++be used
++.TP
++\fB-n\fR, \fB\-\-name\fR STRING
++Use STRING as the label for the imported object(s)
++.TP
++\fB-p\fR, \fB\-\-public\fR
++Import the object(s) as a public object
++.TP
++\fB-t\fR, \fB\-\-type\fR key|cert
++Import only the specified object type
++.TP
++\fB-y\fR, \fB\-\-yes\fR
++Assume an answer of yes for any confirmation prompts that would normally be asked
++
++.SH "SEE ALSO"
++.PP
++\fBtpmtoken_init\fR(1),
++\fBtpmtoken_setpasswd\fR(1),
++\fBtpmtoken_objects\fR(1),
++\fBtpmtoken_protect\fR(1)
++
++.SH "REPORTING BUGS"
++Report bugs to <trousers-users@lists.sourceforge.net>
+--- tpm-tools-1.3.6/man/man1.orig/tpmtoken_init.1	1970-01-01 01:00:00.000000000 +0100
++++ tpm-tools-1.3.6/man/man1/tpmtoken_init.1	2011-06-20 20:40:37.725223744 +0200
+@@ -0,0 +1,67 @@
++.\" Copyright (C) 2005 International Business Machines Corporation
++.\"
++.de Sh \" Subsection
++.br
++.if t .Sp
++.ne 5
++.PP
++\fB\\$1\fR
++.PP
++..
++.de Sp \" Vertical space (when we can't use .PP)
++.if t .sp .5v
++.if n .sp
++..
++.de Ip \" List item
++.br
++.ie \\n(.$>=3 .ne \\$3
++.el .ne 3
++.IP "\\$1" \\$2
++..
++.TH "tpmtoken_init" 1 "2005-04-25"  "TPM Management"
++.ce 1
++TPM Management - tpmtoken_init
++.SH NAME
++tpmtoken_init \- initialize the user's TPM PKCS#11 data store
++.SH "SYNOPSIS"
++.ad l
++.hy 0
++.B tpmtoken_init
++.RB [ OPTION ]
++
++.SH "DESCRIPTION"
++.PP
++\fBtpmtoken_init\fR initializes the user's TPM PKCS#11 data store
++so that applications can exploit the TPM capabilities through
++the PKCS#11 interface.
++.PP
++PKCS#11 requires a password (or PIN) for the Security Officer (SO)
++and the User.  The SO is responsible for initializing the token and setting
++the User password (or PIN).
++
++.TP
++\fB\-h\fR, \fB\-\-help\fR
++Display command usage info.
++.TP
++\fB-v\fR, \fB\-\-version\fR
++Display command version info.
++.TP
++\fB-l\fR, \fB\-\-log\fR [none|error|info|debug]
++Set logging level.
++.TP
++\fB-k\fR, \fB\-\-token\fR STRING
++Use STRING to identify the label of the PKCS#11 token to
++be used
++.TP
++\fB-y\fR, \fB\-\-yes\fR
++Assume an answer of yes for any confirmation prompts that would normally be asked
++
++.SH "SEE ALSO"
++.PP
++\fBtpmtoken_setpasswd\fR(1),
++\fBtpmtoken_import\fR(1),
++\fBtpmtoken_objects\fR(1),
++\fBtpmtoken_protect\fR(1)
++
++.SH "REPORTING BUGS"
++Report bugs to <trousers-users@lists.sourceforge.net>
+--- tpm-tools-1.3.6/man/man1.orig/tpmtoken_objects.1	1970-01-01 01:00:00.000000000 +0100
++++ tpm-tools-1.3.6/man/man1/tpmtoken_objects.1	2011-06-20 20:40:37.725223744 +0200
+@@ -0,0 +1,65 @@
++.\" Copyright (C) 2005 International Business Machines Corporation
++.\"
++.de Sh \" Subsection
++.br
++.if t .Sp
++.ne 5
++.PP
++\fB\\$1\fR
++.PP
++..
++.de Sp \" Vertical space (when we can't use .PP)
++.if t .sp .5v
++.if n .sp
++..
++.de Ip \" List item
++.br
++.ie \\n(.$>=3 .ne \\$3
++.el .ne 3
++.IP "\\$1" \\$2
++..
++.TH "tpmtoken_objects" 1 "2005-04-25"  "TPM Management"
++.ce 1
++TPM Management - tpmtoken_objects
++.SH NAME
++tpmtoken_objects \- display the objects in the user's TPM PKCS#11 data store
++.SH "SYNOPSIS"
++.ad l
++.hy 0
++.B tpmtoken_objects
++[ OPTION ]
++
++.SH "DESCRIPTION"
++.PP
++\fBtpmtoken_objects\fR displays information about the PKCS#11 objects
++that are in the user's data store.
++
++.TP
++\fB\-h\fR, \fB\-\-help\fR
++Display command usage info.
++.TP
++\fB-v\fR, \fB\-\-version\fR
++Display command version info.
++.TP
++\fB-l\fR, \fB\-\-log\fR [none|error|info|debug]
++Set logging level.
++.TP
++\fB-k\fR, \fB\-\-token\fR STRING
++Use STRING to identify the label of the PKCS#11 token to
++be used
++.TP
++\fB-p\fR, \fB\-\-public\fR
++Display only public objects
++.TP
++\fB-x\fR, \fB\-\-extended\fR
++Display additional information about an object not displayed by default
++
++.SH "SEE ALSO"
++.PP
++\fBtpmtoken_init\fR(1),
++\fBtpmtoken_setpasswd\fR(1),
++\fBtpmtoken_import\fR(1),
++\fBtpmtoken_protect\fR(1)
++
++.SH "REPORTING BUGS"
++Report bugs to <trousers-users@lists.sourceforge.net>
+--- tpm-tools-1.3.6/man/man1.orig/tpmtoken_protect.1	1970-01-01 01:00:00.000000000 +0100
++++ tpm-tools-1.3.6/man/man1/tpmtoken_protect.1	2011-06-20 20:40:37.725223744 +0200
+@@ -0,0 +1,79 @@
++.\" Copyright (C) 2005 International Business Machines Corporation
++.\"
++.de Sh \" Subsection
++.br
++.if t .Sp
++.ne 5
++.PP
++\fB\\$1\fR
++.PP
++..
++.de Sp \" Vertical space (when we can't use .PP)
++.if t .sp .5v
++.if n .sp
++..
++.de Ip \" List item
++.br
++.ie \\n(.$>=3 .ne \\$3
++.el .ne 3
++.IP "\\$1" \\$2
++..
++.TH "tpmtoken_protect" 1 "2005-04-25"  "TPM Management"
++.ce 1
++TPM Management - tpmtoken_protect
++.SH NAME
++tpmtoken_protect \- encrypt or decrypt data using a symmetric key stored
++in the user's TPM PKCS#11 data store
++.SH "SYNOPSIS"
++.ad l
++.hy 0
++.B tpmtoken_protect
++[ OPTION ]
++
++.SH "DESCRIPTION"
++.PP
++\fBtpmtoken_protect\fR will encrypt or decrypt data using a symmetric key that
++is stored in the user's data store.  The key used to protect the data
++is a 256-bit AES key stored as a private Secret Key PKCS#11 object.  The object
++has the PKCS#11 label attribute of \'User Data Protection Key\'.
++The key is generated by the TPM PKCS#11 implementation when it is needed the
++first time.  Since it is generated as a private object, it is protected by the
++TPM on the platform.
++.PP
++This command requires the \'-i\' and \'-o\' command options to be specified.
++
++.TP
++\fB\-h\fR, \fB\-\-help\fR
++Display command usage info.
++.TP
++\fB-v\fR, \fB\-\-version\fR
++Display command version info.
++.TP
++\fB-l\fR, \fB\-\-log\fR [none|error|info|debug]
++Set logging level.
++.TP
++\fB-d\fR, \fB\-\-decrypt\fR
++Perform a decryption operation
++.TP
++\fB-e\fR, \fB\-\-encrypt\fR
++Perform an encryption operation
++.TP
++\fB-i\fR, \fB\-\-infile\fR FILE
++Use FILE as the input to the specified operation
++.TP
++\fB-k\fR, \fB\-\-token\fR STRING
++Use STRING to identify the label of the PKCS#11 token to
++be used
++.TP
++\fB-o\fR, \fB\-\-outfile\fR FILE
++Use FILE as the output of the specified operation
++
++.SH "SEE ALSO"
++.PP
++\fBtpmtoken_init\fR(1),
++\fBtpmtoken_import\fR(1),
++\fBtpmtoken_setpasswd\fR(1),
++\fBtpmtoken_objects\fR(1)
++
++.SH "REPORTING BUGS"
++Report bugs to <trousers-users@lists.sourceforge.net>
+--- tpm-tools-1.3.6/man/man1.orig/tpmtoken_setpasswd.1	1970-01-01 01:00:00.000000000 +0100
++++ tpm-tools-1.3.6/man/man1/tpmtoken_setpasswd.1	2011-06-20 20:40:37.725223744 +0200
+@@ -0,0 +1,68 @@
++.\" Copyright (C) 2005 International Business Machines Corporation
++.\"
++.de Sh \" Subsection
++.br
++.if t .Sp
++.ne 5
++.PP
++\fB\\$1\fR
++.PP
++..
++.de Sp \" Vertical space (when we can't use .PP)
++.if t .sp .5v
++.if n .sp
++..
++.de Ip \" List item
++.br
++.ie \\n(.$>=3 .ne \\$3
++.el .ne 3
++.IP "\\$1" \\$2
++..
++.TH "tpmtoken_setpasswd" 1 "2005-04-25"  "TPM Management"
++.ce 1
++TPM Management - tpmtoken_setpasswd
++.SH NAME
++tpmtoken_setpasswd \- change the password(s) associated with
++the user's TPM PKCS#11 data store
++.SH "SYNOPSIS"
++.ad l
++.hy 0
++.B tpmtoken_setpasswd
++[ OPTION ]
++
++.SH "DESCRIPTION"
++.PP
++\fBtpmtoken_setpasswd\fR is used to change the password(s) associated with the
++user's data store.
++.PP
++PKCS#11 requires a password (or PIN) for the Security Officer (SO)
++and the User.  The SO and User password are set when the data store
++is initialized.  This command will allow the user change either password.
++.PP
++
++.TP
++\fB\-h\fR, \fB\-\-help\fR
++Display command usage info.
++.TP
++\fB-v\fR, \fB\-\-version\fR
++Display command version info.
++.TP
++\fB-l\fR, \fB\-\-log\fR [none|error|info|debug]
++Set logging level.
++.TP
++\fB-k\fR, \fB\-\-token\fR STRING
++Use STRING to identify the label of the PKCS#11 token to
++be used
++.TP
++\fB-s\fR, \fB\-\-security-officer\fR
++Set the Security Officer password instead of the User password
++
++.SH "SEE ALSO"
++.PP
++\fBtpmtoken_init\fR(1),
++\fBtpmtoken_import\fR(1),
++\fBtpmtoken_objects\fR(1),
++\fBtpmtoken_protect\fR(1)
++
++.SH "REPORTING BUGS"
++Report bugs to <trousers-users@lists.sourceforge.net>

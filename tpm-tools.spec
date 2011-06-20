@@ -1,13 +1,19 @@
 Summary:	Management tools for the TPM hardware
 Summary(pl.UTF-8):	Narzędzia zarządzające sprzętem TPM
 Name:		tpm-tools
-Version:	1.3.5
+Version:	1.3.6
 Release:	1
 License:	CPL v1.0+
 Group:		Applications/System
 Source0:	http://downloads.sourceforge.net/trousers/%{name}-%{version}.tar.gz
-# Source0-md5:	b64baa248cf30a57ad0e5fb6f096e7dc
+# Source0-md5:	7c11a7f890e21efd01b14c59f144298b
+Patch0:		%{name}-link.patch
+Patch1:		%{name}-missing-mans.patch
 URL:		http://trousers.sourceforge.net/
+BuildRequires:	autoconf >= 2.12
+BuildRequires:	automake >= 1.6
+BuildRequires:	gettext >= 0.15
+BuildRequires:	libtool
 BuildRequires:	opencryptoki-devel >= 2.2.4
 BuildRequires:	openssl-devel
 BuildRequires:	trousers-devel >= 0.3.6
@@ -63,8 +69,19 @@ obiektów w kontenerze i chronić dane.
 
 %prep
 %setup -q
+%patch0 -p1
+%patch1 -p1
+
+# some undefined variable causes warning
+%{__sed} -i -e 's/-Werror //' configure.in
 
 %build
+%{__gettextize}
+%{__libtoolize}
+%{__aclocal}
+%{__autoconf}
+%{__autoheader}
+%{__automake}
 %configure
 
 %{__make}

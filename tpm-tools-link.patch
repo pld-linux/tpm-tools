@@ -1,0 +1,11 @@
+--- tpm-tools-1.3.6/lib/Makefile.am.orig	2010-09-30 19:28:09.000000000 +0200
++++ tpm-tools-1.3.6/lib/Makefile.am	2011-06-20 18:45:09.291658421 +0200
+@@ -52,7 +52,7 @@
+ noinst_LTLIBRARIES	+=	libtpm_pkcs11.la
+ 
+ libtpm_pkcs11_la_SOURCES=	tpm_pkcs11.c
+-libtpm_pkcs11_la_LIBADD	=	libtpm_utils.la
++libtpm_pkcs11_la_LIBADD	=	libtpm_utils.la -ldl
+ endif
+ 
+ #
