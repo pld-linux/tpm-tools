@@ -1,14 +1,13 @@
 Summary:	Management tools for the TPM hardware
 Summary(pl.UTF-8):	Narzędzia zarządzające sprzętem TPM
 Name:		tpm-tools
-Version:	1.3.6
+Version:	1.3.8
 Release:	1
 License:	CPL v1.0+
 Group:		Applications/System
 Source0:	http://downloads.sourceforge.net/trousers/%{name}-%{version}.tar.gz
-# Source0-md5:	7c11a7f890e21efd01b14c59f144298b
+# Source0-md5:	85a978c4e03fefd4b73cbeadde7c4d0b
 Patch0:		%{name}-link.patch
-Patch1:		%{name}-missing-mans.patch
 URL:		http://trousers.sourceforge.net/
 BuildRequires:	autoconf >= 2.12
 BuildRequires:	automake >= 1.6
@@ -16,7 +15,8 @@ BuildRequires:	gettext >= 0.15
 BuildRequires:	libtool
 BuildRequires:	opencryptoki-devel >= 2.2.4
 BuildRequires:	openssl-devel
-BuildRequires:	trousers-devel >= 0.3.6
+BuildRequires:	trousers-devel >= 0.3.9
+Requires:	trousers-libs >= 0.3.9
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -37,7 +37,7 @@ Summary:	Header files for tpm_unseal library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki tpm_unseal
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	trousers-devel >= 0.3.6
+Requires:	trousers-devel >= 0.3.9
 Obsoletes:	tpm-tools-static
 
 %description devel
@@ -70,10 +70,6 @@ obiektów w kontenerze i chronić dane.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
-
-# some undefined variable causes warning
-%{__sed} -i -e 's/-Werror //' configure.in
 
 %build
 %{__gettextize}
