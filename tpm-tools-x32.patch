@@ -1,0 +1,11 @@
+--- tpm-tools-1.3.9.1/configure.ac.orig	2017-04-18 21:17:32.974262418 +0200
++++ tpm-tools-1.3.9.1/configure.ac	2017-04-18 21:27:20.939807229 +0200
+@@ -71,7 +71,7 @@
+ 
+ # Arch specific stuff
+ case $target in
+-	*ppc64* | *powerpc64* | *x86_64* | *s390x*)
++	*ppc64* | *powerpc64* | *s390x*)
+ 		CFLAGS="$CFLAGS -m64"
+ 		;;
+ 	*)
