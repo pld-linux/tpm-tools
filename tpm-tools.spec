@@ -2,12 +2,13 @@ Summary:	Management tools for the TPM hardware
 Summary(pl.UTF-8):	Narzędzia zarządzające sprzętem TPM
 Name:		tpm-tools
 Version:	1.3.9.1
-Release:	1
+Release:	2
 License:	CPL v1.0+
 Group:		Applications/System
 Source0:	http://downloads.sourceforge.net/trousers/%{name}-%{version}.tar.gz
 # Source0-md5:	1532293aa632a0eaa7e60df87c779855
 Patch0:		%{name}-link.patch
+Patch1:		%{name}-x32.patch
 URL:		http://trousers.sourceforge.net/
 BuildRequires:	autoconf >= 2.12
 BuildRequires:	automake >= 1.6
@@ -70,6 +71,7 @@ obiektów w kontenerze i chronić dane.
 %prep
 %setup -q -c
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__gettextize}
