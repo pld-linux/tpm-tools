@@ -2,13 +2,16 @@ Summary:	Management tools for the TPM hardware
 Summary(pl.UTF-8):	Narzędzia zarządzające sprzętem TPM
 Name:		tpm-tools
 Version:	1.3.9.1
-Release:	3
+Release:	4
 License:	CPL v1.0+
 Group:		Applications/System
 Source0:	http://downloads.sourceforge.net/trousers/%{name}-%{version}.tar.gz
 # Source0-md5:	1532293aa632a0eaa7e60df87c779855
 Patch0:		%{name}-link.patch
 Patch1:		%{name}-x32.patch
+Patch2:		0001-Fix-build-with-OpenSSL-1.1-due-to-EVP_PKEY-being-an-.patch
+Patch3:		0002-Fix-build-with-OpenSSL-1.1-due-to-RSA-being-an-opaqu.patch
+Patch4:		0003-Allocate-OpenSSL-cipher-contexts-for-seal-unseal.patch
 URL:		http://trousers.sourceforge.net/
 BuildRequires:	autoconf >= 2.12
 BuildRequires:	automake >= 1.6
@@ -72,6 +75,9 @@ obiektów w kontenerze i chronić dane.
 %setup -q -c
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %build
 %{__gettextize}
