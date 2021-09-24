@@ -2,7 +2,7 @@ Summary:	Management tools for the TPM hardware
 Summary(pl.UTF-8):	Narzędzia zarządzające sprzętem TPM
 Name:		tpm-tools
 Version:	1.3.9.1
-Release:	4
+Release:	5
 License:	CPL v1.0+
 Group:		Applications/System
 Source0:	http://downloads.sourceforge.net/trousers/%{name}-%{version}.tar.gz
