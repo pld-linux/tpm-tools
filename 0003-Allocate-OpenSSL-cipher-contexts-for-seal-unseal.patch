@@ -13,10 +13,9 @@ Fixes: f50ab0949438 ("Support OpenSSL 1.1.0")
  2 files changed, 19 insertions(+), 4 deletions(-)
 
 diff --git a/lib/tpm_unseal.c b/lib/tpm_unseal.c
-index fc4a84906a..005dab7f8f 100644
---- a/lib/tpm_unseal.c
-+++ b/lib/tpm_unseal.c
-@@ -86,7 +86,7 @@ int tpmUnsealFile( char* fname, unsigned char** tss_data, int* tss_size,
+--- tpm-tools-1.3.9.2/lib/tpm_unseal.c.orig	2020-10-01 11:28:08.000000000 +0200
++++ tpm-tools-1.3.9.2/lib/tpm_unseal.c	2022-10-22 15:45:54.247183137 +0200
+@@ -86,7 +86,7 @@ int tpmUnsealFile( char* fname, unsigned
  	int srkSecretLen;
  	unsigned char* res_data = NULL;
  	int res_size = 0;
@@ -25,11 +24,11 @@ index fc4a84906a..005dab7f8f 100644
  	BIO *bdata = NULL, *b64 = NULL, *bmem = NULL;
  	int bioRc;
  
-@@ -408,7 +408,12 @@ int tpmUnsealFile( char* fname, unsigned char** tss_data, int* tss_size,
+@@ -408,7 +408,12 @@ int tpmUnsealFile( char* fname, unsigned
  	}
  
  	/* Decode and decrypt the encrypted data */
--	EVP_CIPHER_CTX *ctx = NULL;
+-	EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
 +	ctx = EVP_CIPHER_CTX_new();
 +	if ( ctx == NULL ) {
 +		rc = TPMSEAL_STD_ERROR;
@@ -51,8 +50,8 @@ index fc4a84906a..005dab7f8f 100644
  
 diff --git a/src/cmds/tpm_sealdata.c b/src/cmds/tpm_sealdata.c
 index a2157f34b1..e25244a0f4 100644
---- a/src/cmds/tpm_sealdata.c
-+++ b/src/cmds/tpm_sealdata.c
+--- tpm-tools-1.3.9.2/src/cmds/tpm_sealdata.c.orig	2020-10-01 11:28:08.000000000 +0200
++++ tpm-tools-1.3.9.2/src/cmds/tpm_sealdata.c	2022-10-22 15:46:54.763521959 +0200
 @@ -118,7 +118,7 @@ int main(int argc, char **argv)
  	char *passwd = NULL;
  	int pswd_len;
@@ -66,7 +65,7 @@ index a2157f34b1..e25244a0f4 100644
  	BIO_puts(bdata, TPMSEAL_ENC_STRING); 
  	bdata = BIO_push(b64, bdata);
  
--	EVP_CIPHER_CTX *ctx = NULL;
+-	EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
 +	ctx = EVP_CIPHER_CTX_new();
 +	if (ctx == NULL) {
 +		logError(_("Unable to allocate cipher context\n"));
