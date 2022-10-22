@@ -25,11 +25,12 @@ index fc4a84906a..005dab7f8f 100644
  	BIO *bdata = NULL, *b64 = NULL, *bmem = NULL;
  	int bioRc;
  
-@@ -408,7 +408,11 @@ int tpmUnsealFile( char* fname, unsigned char** tss_data, int* tss_size,
+@@ -408,7 +408,12 @@ int tpmUnsealFile( char* fname, unsigned char** tss_data, int* tss_size,
  	}
  
  	/* Decode and decrypt the encrypted data */
--	EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
+-	EVP_CIPHER_CTX *ctx = NULL;
++	ctx = EVP_CIPHER_CTX_new();
 +	if ( ctx == NULL ) {
 +		rc = TPMSEAL_STD_ERROR;
 +		tpm_errno = ENOMEM;
@@ -61,11 +62,12 @@ index a2157f34b1..e25244a0f4 100644
  	BIO *bin = NULL, *bdata=NULL, *b64=NULL;
  
  	initIntlSys();
-@@ -343,7 +343,10 @@ int main(int argc, char **argv)
+@@ -343,7 +343,11 @@ int main(int argc, char **argv)
  	BIO_puts(bdata, TPMSEAL_ENC_STRING); 
  	bdata = BIO_push(b64, bdata);
  
--	EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
+-	EVP_CIPHER_CTX *ctx = NULL;
++	ctx = EVP_CIPHER_CTX_new();
 +	if (ctx == NULL) {
 +		logError(_("Unable to allocate cipher context\n"));
 +		goto out_close;

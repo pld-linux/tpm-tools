@@ -1,18 +1,16 @@
 Summary:	Management tools for the TPM hardware
 Summary(pl.UTF-8):	Narzędzia zarządzające sprzętem TPM
 Name:		tpm-tools
-Version:	1.3.9.1
-Release:	5
+Version:	1.3.9.2
+Release:	1
 License:	CPL v1.0+
 Group:		Applications/System
-Source0:	http://downloads.sourceforge.net/trousers/%{name}-%{version}.tar.gz
-# Source0-md5:	1532293aa632a0eaa7e60df87c779855
+Source0:	https://downloads.sourceforge.net/trousers/%{name}-%{version}.tar.gz
+# Source0-md5:	44091f5497996c6fd674c73b43f190ab
 Patch0:		%{name}-link.patch
 Patch1:		%{name}-x32.patch
-Patch2:		0001-Fix-build-with-OpenSSL-1.1-due-to-EVP_PKEY-being-an-.patch
-Patch3:		0002-Fix-build-with-OpenSSL-1.1-due-to-RSA-being-an-opaqu.patch
 Patch4:		0003-Allocate-OpenSSL-cipher-contexts-for-seal-unseal.patch
-URL:		http://trousers.sourceforge.net/
+URL:		https://trousers.sourceforge.net/
 BuildRequires:	autoconf >= 2.12
 BuildRequires:	automake >= 1.6
 BuildRequires:	gettext-tools >= 0.15
@@ -42,7 +40,7 @@ Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki tpm_unseal
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	trousers-devel >= 0.3.9
-Obsoletes:	tpm-tools-static
+Obsoletes:	tpm-tools-static < 1.3.5
 
 %description devel
 Header files for tpm_unseal library.
@@ -72,12 +70,15 @@ Narzędzia pozwalają importować klucze i certyfikaty, wypisywać listę
 obiektów w kontenerze i chronić dane.
 
 %prep
-%setup -q -c
+%setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 %patch4 -p1
+
+# prepare for gettextize
+%{__sed} -i -e '/po\/Makefile\.in/d' configure.ac
+mkdir -p m4
+touch m4/Makefile.am
 
 %build
 %{__gettextize}
