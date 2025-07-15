@@ -71,9 +71,9 @@ obiektów w kontenerze i chronić dane.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch4 -p1
+%patch -P0 -p1
+%patch -P1 -p1
+%patch -P4 -p1
 
 # prepare for gettextize
 %{__sed} -i -e '/po\/Makefile\.in/d' configure.ac
